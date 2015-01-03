@@ -9,75 +9,84 @@ extract($_POST);
 /*------------------------------- Set up database --------------------------------------------------*/
 include ('configdb.php');
 
+echo "sad\n";
+print_r($_POST);
+echo "sad\n";
 /*-------------------------------- Initialize unreferenced variables -----------------*/
-if(isset($_POST['azi_value']))
+if($_POST['azi_var_fix']=="fixed")
 {
 
-    $azi_ini_value=-1;$azi_min_value=-1;$azi_max_value=-1;$azi_step_value=-1;
+    $azim_ini_value=-1;$azim_min_value=-1;$azim_max_value=-1;$azim_step_value=-1;
+    $azim_value=$azi_value;
 }
 else
 {
-    $azi_value=-1;
+    $azim_ini_value=$azi_ini_value;$azim_min_value=$azi_min_value;$azim_max_value=$azi_max_value;$azim_step_value=$azi_step_value;
+    $azim_value=-1;
 }
 
 
-if(isset($_POST['wwr_value']))
+if($_POST['wwr_var_fix']=="fixed")
 {
 
-    $wwr_ini_value=-1;$wwr_min_value=-1;$wwr_max_value=-1;$wwr_step_value=-1;$diff_wwr="NA";
-}
-else
-{
-    $wwr_value=-1;
-}
-
-
-if(isset($_POST['depth_value']))
-{
-
-    $depth_ini_value=-1;$depth_min_value=-1;$depth_max_value=-1;$depth_step_value=-1;
+    $wwrm_ini_value=-1;$wwrm_min_value=-1;$wwrm_max_value=-1;$wwrm_step_value=-1;$diff_wwrm="NA";
+    $wwrm_value=$wwr_value;
 }
 else
 {
-    $depth_value=-1;
+    $wwrm_ini_value=$wwr_ini_value;$wwrm_min_value=$wwr_min_value;$wwrm_max_value=$wwr_max_value;$wwrm_step_value=$wwr_step_value;$diff_wwrm=$diff_wwr;
+    $wwrm_value=-1;
 }
 
 
-
-
-if(isset($_POST['lbybratio_value']))
+if($_POST['depth_var_fix']=="fixed")
 {
 
-    $lbybratio_ini_value=-1;$lbybratio_min_value=-1;$lbybratio_max_value=-1;$lbybratio_step_value=-1;
+    $depthm_ini_value=-1;$depthm_min_value=-1;$depthm_max_value=-1;$depthm_step_value=-1;
+    $depthm_value=$depth_value;
 }
 else
 {
-    $lbybratio_value=-1;
+    $depthm_ini_value=$depth_ini_value;$depthm_min_value=$depth_min_value;$depthm_max_value=$depth_max_value;$depthm_step_value=$depth_step_value;
+    $depthm_value=-1;
+}
+
+
+if($_POST['lbybratio_var_fix']=="fixed")
+{
+
+    $lbbm_ini_value=-1;$lbbm_min_value=-1;$lbbm_max_value=-1;$lbbm_step_value=-1;
+    $lbbm_value=$lbybratio_value;
+}
+else
+{
+    $lbbm_ini_value=$lbybratio_ini_value;$lbbm_min_value=$lbybratio_min_value;$lbbm_max_value=$lbybratio_max_value;$lbbm_step_value=$lbybratio_step_value;
+    $lbbm_value=-1;
 }
 
 /*------------------------------- Generate mysql Query for full match of inputs -------------------------*/
 function generateFullMatchQuery(){
 
     global $unique_counter, $location, $total_length, $total_breadth, $total_area, $hvactype;
-    global $azi_value, $azi_ini_value, $azi_min_value, $azi_max_value, $azi_step_value;
-    global $wwr_value, $diff_wwr, $wwr_ini_value, $wwr_min_value, $wwr_max_value, $wwr_step_value;
-    global $depth_value, $depth_ini_value, $depth_max_value, $depth_min_value, $depth_step_value;
-    global $lbybratio_value, $lbybratio_min_value, $lbybratio_max_value, $lbybratio_ini_value, $lbybratio_ini_value;
+    global $azim_value, $azim_ini_value, $azim_min_value, $azim_max_value, $azim_step_value;
+    global $wwrm_value, $diff_wwrm, $wwrm_ini_value, $wwrm_min_value, $wwrm_max_value, $wwrm_step_value;
+    global $depthm_value, $depthm_ini_value, $depthm_max_value, $depthm_min_value, $depthm_step_value;
+    global $lbbm_value, $lbbm_min_value, $lbbm_max_value, $lbbm_ini_value, $lbbm_ini_value,$lbbm_step_value;
     global $windowtype1, $windowtype2, $windowtype3, $windowtype4;
 
-    $query="SELECT * FROM Simulations WHERE location=\"$location1\" and length=$total_length and breadth=$total_breadth and area=$total_area and ac_system=$hvactype".
+    $query="SELECT * FROM Simulations WHERE location=\"$location1\" and length=$total_length and breadth=$total_breadth and area=$total_area and ac_system=$hvactype ".
 
-        "and aa_fixed=$azi_value and aa_var_ini=$azi_ini_value and aa_var_min=$azi_min_value and aa_var_max=$azi_max_value and aa_var_step=$azi_step_value". 
+        "and aa_fixed=$azim_value and aa_var_ini=$azim_ini_value and aa_var_min=$azim_min_value and aa_var_max=$azim_max_value and aa_var_step=$azim_step_value ". 
 
-        "and wwr_fixed=$wwr_value and wwr_var_diff=\"$diff_wwr\" and wwr_var_ini=$wwr_ini_value and wwr_var_min=$wwr_min_value
-        and wwr_var_max=$wwr_max_value and wwr_var_step=$wwr_step_value".
+        "and wwr_fixed=$wwrm_value and wwr_var_diff=\"$diff_wwrm\" and wwr_var_ini=$wwrm_ini_value and wwr_var_min=$wwrm_min_value
+        and wwr_var_max=$wwrm_max_value and wwr_var_step=$wwrm_step_value ".
 
-        "and od_fixed=$depth_value and od_var_ini=$depth_ini_value and od_var_min=$depth_min_value and od_var_max=$depth_max_value and od_var_step=$depth_step_value".
+        "and od_fixed=$depthm_value and od_var_ini=$depthm_ini_value and od_var_min=$depthm_min_value and od_var_max=$depthm_max_value and od_var_step=$depthm_step_value ".
 
-        "and ar_fixed=$lbybratio_value and ar_var_ini=$lbybratio_ini_value and ar_var_min=$lbybratio_min_value
-        and ar_var_max=$lbybratio_max_value and ar_var_step=$lbybratio_step_value".
+        "and ar_fixed=$lbbm_value and ar_var_ini=$lbbm_ini_value and ar_var_min=$lbbm_min_value
+        and ar_var_max=$lbbm_max_value and ar_var_step=$lbbm_step_value ".
 
-        "and wt1=$windowtype1 and wt2=$windowtype2 and wt3=$windowtype3 and wt4=$windowtype4;";
+        "and wt1=$windowtype1 and wt2=$windowtype2 and wt3=$windowtype3 and wt4=$windowtype4 ;";
 
     return $query;                          
 }
@@ -93,67 +102,67 @@ function generateOuputReferenceQuery($unique_counter, $out_uuid){
 function generateInsertSimulationsQuery(){
 
     global $unique_counter, $location, $total_length, $total_breadth, $total_area, $hvactype;
-    global $azi_value, $azi_ini_value, $azi_min_value, $azi_max_value, $azi_step_value;
-    global $wwr_value, $diff_wwr, $wwr_ini_value, $wwr_min_value, $wwr_max_value, $wwr_step_value;
-    global $depth_value, $depth_ini_value, $depth_max_value, $depth_min_value, $depth_step_value;
-    global $lbybratio_value, $lbybratio_min_value, $lbybratio_max_value, $lbybratio_ini_value, $lbybratio_ini_value;
+    global $azim_value, $azim_ini_value, $azim_min_value, $azim_max_value, $azim_step_value;
+    global $wwrm_value, $diff_wwrm, $wwrm_ini_value, $wwrm_min_value, $wwrm_max_value, $wwrm_step_value;
+    global $depthm_value, $depthm_ini_value, $depthm_max_value, $depthm_min_value, $depthm_step_value;
+    global $lbbm_value, $lbbm_min_value, $lbbm_max_value, $lbbm_ini_value, $lbbm_ini_value, $lbbm_step_value;
     global $windowtype1, $windowtype2, $windowtype3, $windowtype4;
 
     $keys="insert into Simulations (uuid, location, length, breadth, area, ac_system";
     $values =" (\"$unique_counter\",\"$location1\",$total_length,$total_breadth,$total_area,$hvactype";
 
 
-    if(isset($_POST['azi_value']))
-    {
+   // if(isset($_POST['azi_value']))
+   // {
         $keys=$keys.",aa_fixed";
-        $values=$values.",$azi_value";
-    }
-    else
-    {
+        $values=$values.",$azim_value";
+   // }
+   // else
+   // {
         $keys=$keys.",aa_var_ini, aa_var_min, aa_var_max, aa_var_step";
-        $values=$values.",$azi_ini_value,$azi_min_value,$azi_max_value,$azi_step_value";
-    }
+        $values=$values.",$azim_ini_value,$azim_min_value,$azim_max_value,$azim_step_value";
+   // }
 
 
-    if(isset($_POST['wwr_value']))
-    {
+   // if(isset($_POST['wwr_value']))
+   // {
         $keys=$keys.",wwr_fixed";
-        $values=$values.",$wwr_value";
-    }
-    else
-    {
+        $values=$values.",$wwrm_value";
+  //  }
+  //  else
+  //  {
         $keys=$keys.",wwr_var_ini, wwr_var_min, wwr_var_max, wwr_var_step, wwr_var_diff";
-        $values=$values.",$wwr_ini_value,$wwr_min_value,$wwr_max_value,$wwr_step_value,\"$diff_wwr\"";
-    }
+        $values=$values.",$wwrm_ini_value,$wwrm_min_value,$wwrm_max_value,$wwrm_step_value,\"$diff_wwrm\"";
+  //  }
 
 
-    if(isset($_POST['depth_value']))
-    {
+   // if(isset($_POST['depth_value']))
+   // {
         $keys=$keys.",od_fixed";
-        $values=$values.",$depth_value";
-    }
-    else
-    {
+        $values=$values.",$depthm_value";
+   // }
+   // else
+   // {
         $keys=$keys.",od_var_ini, od_var_min, od_var_max, od_var_step";
-        $values=$values.",$depth_ini_value,$depth_min_value,$depth_max_value,$depth_step_value";
-    }
+        $values=$values.",$depthm_ini_value,$depthm_min_value,$depthm_max_value,$depthm_step_value";
+   // }
 
 
 
 
-    if(isset($_POST['lbybratio_value']))
-    {
+   // if(isset($_POST['lbybratio_value']))
+   // {
         $keys=$keys.",ar_fixed";
-        $values=$values.",$lbybratio_value";
-    }
-    else
-    {
+        $values=$values.",$lbbm_value";
+   // }
+   // else
+   // {
         $keys=$keys.",ar_var_ini, ar_var_min, ar_var_max, ar_var_step";
-        $values=$values.",$lbybratio_ini_value,$lbybratio_min_value,$lbybratio_max_value,$lbybratio_step_value";
-    }
+        $values=$values.",$lbbm_ini_value,$lbbm_min_value,$lbbm_max_value,$lbbm_step_value ";
+   // }
 
-    $keys=$keys.",wt1, wt2, wt3, wt4";
-    $values=$values.",$windowtype1,$windowtype2,$windowtype3,$windowtype4";
+    $keys=$keys.",wt1, wt2, wt3, wt4 ";
+    $values=$values.",$windowtype1,$windowtype2,$windowtype3,$windowtype4 ";
 
     $keys=$keys.") values ";
     $values=$values.");";
@@ -169,6 +178,11 @@ if (mysqli_connect_errno($con))
 else
 {
     $query= generateFullMatchQuery();
+    echo "</br>";
+    echo "START QUERY <br/>";
+    echo $query;
+    echo "END QUERY \n";
+    echo "</br>";
     $sql_result = mysqli_query($con,$query);
     $row = mysqli_fetch_array($sql_result); 
 
@@ -184,7 +198,7 @@ else
         }
         return 0;
     }
-    else // Simulation match not found, insert simulations details into database
+    else // Simulation match not found, insert simulation details into database
     {
         $out_uuid=$unique_counter;
         $query=generateOuputReferenceQuery($unique_counter, $out_uuid);
@@ -210,9 +224,10 @@ else
 echo "unique counter is $unique_counter and var var_quantities is $var_quantities<br>";
 echo $azi_var_fix."azimuth var fix is <br>";
 $old = umask(0);
+echo "$unique_counter";
 mkdir("./working_directory/$unique_counter", 0777  ) or die("<br>Can not create working directory");//a working directory is made for every user where data related to him would be stored
 umask($old);
-$working_dir="./working_directory/$unique_counter";//stores the name of the working directory for each user
+$working_dir="./working_directory/$unique_counter"; //stores the name of the working directory for each user
 
 /*---------------------- store data of template file for every user in a variable--------------------*/
 
