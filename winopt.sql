@@ -1,8 +1,8 @@
--- MySQL dump 10.13  Distrib 5.5.38, for debian-linux-gnu (i686)
+-- MySQL dump 10.13  Distrib 5.5.40, for debian-linux-gnu (i686)
 --
 -- Host: localhost    Database: winopt
 -- ------------------------------------------------------
--- Server version	5.5.38-0ubuntu0.14.04.1
+-- Server version	5.5.40-0ubuntu0.14.04.1
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
@@ -18,10 +18,6 @@
 --
 -- Table structure for table `Output_Reference`
 --
-
-CREATE DATABASE IF NOT EXISTS winopt;
-
-USE winopt;
 
 DROP TABLE IF EXISTS `Output_Reference`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
@@ -39,6 +35,7 @@ CREATE TABLE `Output_Reference` (
 
 LOCK TABLES `Output_Reference` WRITE;
 /*!40000 ALTER TABLE `Output_Reference` DISABLE KEYS */;
+INSERT INTO `Output_Reference` VALUES ('','');
 /*!40000 ALTER TABLE `Output_Reference` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -52,31 +49,31 @@ DROP TABLE IF EXISTS `Simulations`;
 CREATE TABLE `Simulations` (
   `uuid` varchar(80) NOT NULL DEFAULT '',
   `location` varchar(40) DEFAULT NULL,
-  `length` float(25,10) DEFAULT NULL,
-  `breadth` float(25,10) DEFAULT NULL,
-  `area` float(30,10) DEFAULT NULL,
+  `length` double DEFAULT NULL,
+  `breadth` double DEFAULT NULL,
+  `area` double DEFAULT NULL,
   `ac_system` int(11) DEFAULT NULL,
-  `aa_fixed` float(25,10) DEFAULT NULL,
-  `aa_var_ini` float(25,10) DEFAULT NULL,
-  `aa_var_min` float(25,10) DEFAULT NULL,
-  `aa_var_max` float(25,10) DEFAULT NULL,
-  `aa_var_step` float(25,10) DEFAULT NULL,
-  `wwr_fixed` float(25,10) DEFAULT NULL,
+  `aa_fixed` double DEFAULT NULL,
+  `aa_var_ini` double DEFAULT NULL,
+  `aa_var_min` double DEFAULT NULL,
+  `aa_var_max` double DEFAULT NULL,
+  `aa_var_step` double DEFAULT NULL,
+  `wwr_fixed` double DEFAULT NULL,
   `wwr_var_diff` varchar(10) DEFAULT NULL,
-  `wwr_var_ini` float(25,10) DEFAULT NULL,
-  `wwr_var_min` float(25,10) DEFAULT NULL,
-  `wwr_var_max` float(25,10) DEFAULT NULL,
-  `wwr_var_step` float(25,10) DEFAULT NULL,
-  `od_fixed` float(25,10) DEFAULT NULL,
-  `od_var_ini` float(25,10) DEFAULT NULL,
-  `od_var_min` float(25,10) DEFAULT NULL,
-  `od_var_max` float(25,10) DEFAULT NULL,
-  `od_var_step` float(25,10) DEFAULT NULL,
-  `ar_fixed` float(25,10) DEFAULT NULL,
-  `ar_var_ini` float(25,10) DEFAULT NULL,
-  `ar_var_min` float(25,10) DEFAULT NULL,
-  `ar_var_max` float(25,10) DEFAULT NULL,
-  `ar_var_step` float(25,10) DEFAULT NULL,
+  `wwr_var_ini` double DEFAULT NULL,
+  `wwr_var_min` double DEFAULT NULL,
+  `wwr_var_max` double DEFAULT NULL,
+  `wwr_var_step` double DEFAULT NULL,
+  `od_fixed` double DEFAULT NULL,
+  `od_var_ini` double DEFAULT NULL,
+  `od_var_min` double DEFAULT NULL,
+  `od_var_max` double DEFAULT NULL,
+  `od_var_step` double DEFAULT NULL,
+  `ar_fixed` double DEFAULT NULL,
+  `ar_var_ini` double DEFAULT NULL,
+  `ar_var_min` double DEFAULT NULL,
+  `ar_var_max` double DEFAULT NULL,
+  `ar_var_step` double DEFAULT NULL,
   `wt1` int(11) DEFAULT NULL,
   `wt2` int(11) DEFAULT NULL,
   `wt3` int(11) DEFAULT NULL,
@@ -103,4 +100,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2014-09-20  8:21:25
+-- Dump completed on 2015-01-09  1:25:09
